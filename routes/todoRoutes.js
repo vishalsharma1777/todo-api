@@ -1,12 +1,13 @@
 const toDoController = require('../controllers/todoController.js');
-const validate = require('../middlewares/validate.js');
+const validateBody = require('../middlewares/validate.js');
+const validateParams = require('../middlewares/validate.js');
 
 const router = require('express').Router();
 
-router.post('/', validate, toDoController.createToDo);
+router.post('/', validateBody, toDoController.createToDo);
 router.get('/', toDoController.allToDos);
-router.get('/:id', toDoController.getToDoById);
-router.put('/:id', validate, toDoController.updateToDo);
-router.delete('/:id', toDoController.deleteToDo);
+router.get('/:id', validateParams, toDoController.getToDoById);
+router.put('/:id', validateBody, validateParams, toDoController.updateToDo);
+router.delete('/:id', validateParams, toDoController.deleteToDo);
 
 module.exports = router;

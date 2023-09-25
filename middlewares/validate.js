@@ -5,7 +5,7 @@ const todoSchema = yup.object().shape({
   isCompleted: yup.boolean().required()
 });
 
-const validate = async (req, res, next) => {
+const validateBody = async (req, res, next) => {
   try {
     await todoSchema.validate(req.body);
     next();
@@ -14,4 +14,13 @@ const validate = async (req, res, next) => {
   }
 };
 
-module.exports = validate;
+const validateParams = async (req, res, next) => {
+  try {
+    await yup.number().required().validate(req.params.id);
+    next();
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+(module.exports = validateBody), validateParams;
